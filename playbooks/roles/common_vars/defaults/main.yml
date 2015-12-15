@@ -109,8 +109,8 @@ common_log_user: syslog
 common_git_ppa: "ppa:git-core/ppa"
 
 common_python_pkgs:
-  - "https://files.edx.org/devops/python_packages/python2.7_2.7.10-0%2B{{ ansible_distribution_release }}1_amd64.deb"
-  - "https://files.edx.org/devops/python_packages/python2.7-dev_2.7.10-0%2B{{ ansible_distribution_release }}1_amd64.deb"
+  - "https://s3.amazonaws.com/edx-static/devops/python_packages/python2.7_2.7.10-0%2B{{ ansible_distribution_release }}1_amd64.deb"
+  - "https://s3.amazonaws.com/edx-static/devops/python_packages/python2.7-dev_2.7.10-0%2B{{ ansible_distribution_release }}1_amd64.deb"
 
 # Skip supervisor tasks
 # When set to true this flag will allow you to install everything but keep
