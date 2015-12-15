@@ -22,10 +22,6 @@
   apt_repository: 
     repo: "{{ common_git_ppa }}"
 
-# Ensure that we get the latest version of python 2.7
-- name: Add python 2.7 apt repository
-  apt_repository: repo="{{ common_python_ppa }}"
-
 - name: Install role-independent useful system packages
   # do this before log dir setup; rsyslog package guarantees syslog user present
   apt:
@@ -34,6 +30,26 @@
     state: present 
     update_cache: yes
   with_items: common_debian_pkgs
+
+- name: download the python deb
+  get_url:
+    dest: "/tmp/{{ item | basename }}"
+    url:  "{{ item }}"
+  register: download_deb
+  with_items: common_python_pkgs
+  tags:
+    - install
+    - install:system-requirements
+    - install:python
+
+- name: install custom python
+  shell: gdebi -nq /tmp/{{ item | basename }}
+  when: download_deb.changed
+  with_items: common_python_pkgs
+  tags:
+    - install
+    - install:system-requirements
+    - install:python
 
 - name: Create common directories
   file:
